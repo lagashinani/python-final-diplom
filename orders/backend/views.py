@@ -148,6 +148,9 @@ class AccountDetails(APIView):
         else:
             return JsonResponse({'Status': False, 'Errors': user_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+"""
+Using viewsets
+"""
 
 class CategoryView(viewsets.ModelViewSet):
     """

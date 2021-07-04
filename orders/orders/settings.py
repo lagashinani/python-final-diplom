@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts',
     'backend',
     'orders',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,7 @@ EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 40,
 
@@ -164,3 +166,19 @@ REST_FRAMEWORK = {
         'partner': '10/day',
     }
 }
+
+# SCHEMA settings
+
+SPECTACULAR_SETTINGS  = {
+     'TITLE' : 'API дипломного проетка' ,
+     'DESCRIPTION' : 'Дипломный проект' ,
+     'VERSION' : '1.0.0' ,
+}
+
+# REDIS settings
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'

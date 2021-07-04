@@ -2,8 +2,9 @@ import yaml
 from orders.settings import EMAIL_HOST_USER
 from django.core.mail.message import EmailMultiAlternatives
 from .models import Shop, Category, Product, Parameter, ProductParameter, ProductInfo
-#
+from orders.celery import app
 
+@app.task()
 def send_email(title, message: str, email: str, *args, **kwargs) -> str:
     email_list = list()
     email_list.append(email)
@@ -20,7 +21,7 @@ def open_file(shop):
         data = yaml.safe_load(f)
     return data
 
-
+@app.task()
 def import_shop_data(data, user_id):
     file = open_file(data)
 
